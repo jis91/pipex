@@ -34,8 +34,9 @@ void execute(char *cmd, char **envp)
     path = resolve_path(argv_exec[0], envp);
     if (path == NULL)
     {
+        ft_printf("%s: command not found\n", argv_exec[0]);
         free_split(argv_exec);
-        error_exit("path");
+        exit(127); // 127 is standard cmd error in bash
     }
     execve(path, argv_exec, envp);
     free_split(argv_exec);
