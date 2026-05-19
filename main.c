@@ -33,12 +33,15 @@ int main(int argc, char **argv, char **envp)
 
     if (argc != 5)
     {
-        ft_printf("Usage: ./pipex file1 cmd1 cmd2 file2\n");
+        write(2, "Usage: ./pipex file1 cmd1 cmd2 file2\n", 37);
         return (1);
     }
     file1 = open(argv[1], O_RDONLY);
     if (file1 < 0)
-        error_exit(argv[1]);
+    {
+        write(2, argv[1], ft_strlen(argv[1]));
+        write(2, ": No such file or directory\n", 28);
+    }
     file2 = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
     if (file2 < 0)
         error_exit(argv[4]);

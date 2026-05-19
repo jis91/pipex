@@ -22,6 +22,8 @@ char    *resolve_path(char *cmd, char **envp)
     char    *raw_path;
     int     i;
 
+    if (access(cmd, X_OK) == 0)
+        return (ft_strdup(cmd));
     raw_path = get_path_from_envp(envp);
     if (raw_path == NULL)
         return (NULL);

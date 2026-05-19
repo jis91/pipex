@@ -1,0 +1,56 @@
+TESTS :
+BASICS 
+
+
+./pipex infile "ls -l" "wc -l" outfile
+< infile ls -l | wc -l > outfile_shell
+
+
+./pipex infile "grep a" "wc -w" outfile
+< infile grep a | wc -w > outfile_shell
+
+
+./pipex infile "cat" "wc -l" outfile
+< infile cat | wc -l > outfile_shell
+
+ERROR CASES
+
+
+./pipex infile "badcmd" "wc -l" outfile
+< infile badcmd | wc -l > outfile_shell
+
+
+./pipex infile "ls -l" "badcmd" outfile
+< infile ls -l | badcmd > outfile_shell
+
+////////////////////////////////////////////////////
+./pipex nofile "ls -l" "wc -l" outfile
+< nofile ls -l | wc -l > outfile_shell
+
+
+chmod 000 infile
+./pipex infile "ls -l" "wc -l" outfile
+< infile ls -l | wc -l > outfile_shell
+chmod 644 infile
+
+///////////////////////////////////////////////////////
+WRONG ARGUMENTS
+
+./pipex infile "ls -l" 
+
+./pipex infile "ls -l" "wc -l" "cat" outfile
+
+
+EDGE CASES
+
+create empty_file
+./pipex empty_file "cat" "wc -l" outfile
+
+./pipex infile "/bin/ls" "wc -l" outfile
+< infile /bin/ls | wc -l > outfile_shell
+
+
+
+
+        write(2, argv[1], ft_strlen(argv[1]));
+        write(2, ": No such file or directory\n", 28);
