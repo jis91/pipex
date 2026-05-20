@@ -2,6 +2,12 @@
 
 void    child_one(int fd[2], int file1, char **argv, char **envp)
 {
+    if (file1 < 0)
+    {
+        close(fd[0]);
+        close(fd[1]);
+        exit(1);
+    }
     if (dup2(file1, STDIN_FILENO) < 0)
         error_exit("dup2");
     if (dup2(fd[1], STDOUT_FILENO) < 0)
