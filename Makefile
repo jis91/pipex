@@ -45,7 +45,8 @@ fclean: clean
 
 re: fclean all
 
-bonus: $(LIBFT) $(OBJS_BONUS)
-	$(CC) $(CFLAGS) $(OBJS_BONUS) $(LIBFT) -o $(NAME)
+bonus:
+
+	@echo "BONUS not done yet"
 
 .PHONY: all clean fclean re bonus

@@ -12,7 +12,6 @@
 
 #include "pipex.h"
 
-
 static char	*try_path(char *dir, char *cmd)
 {
 	char	*temp;
@@ -24,7 +23,7 @@ static char	*try_path(char *dir, char *cmd)
 	return (path);
 }
 
-static void		handle_permission(char **directories)
+static void	handle_permission(char **directories)
 {
 	free_split(directories);
 	write(2, "Permission denied\n", 19);
@@ -77,9 +76,10 @@ char	*resolve_path(char *cmd, char **envp)
 	directories = ft_split(raw_path, ':');
 	while (directories[i])
 	{
+		path = try_path(directories[i], cmd);
 		path = check_access(path, directories);
 		if (path)
-			return(path);
+			return (path);
 		i++;
 	}
 	free_split(directories);

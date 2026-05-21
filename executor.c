@@ -51,8 +51,7 @@ void	execute(char *cmd, char **envp)
 	path = resolve_path(argv_exec[0], envp);
 	if (path == NULL)
 	{
-		write(2, argv_exec[0], ft_strlen(argv_exec[0]));
-		write(2, ": command not found\n", 20);
+		perror(argv_exec[0]);
 		free_split(argv_exec);
 		exit(127);
 	}

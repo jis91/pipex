@@ -12,30 +12,31 @@
 
 #include "pipex.h"
 
-void	run_pipex(t_pipex *pipex)
+int	run_pipex(t_pipex *pipex)
 {
-	pid_t	pid1;
-	pid_t	pid2;
+	int		status;
 
-	pid1 = fork();
-	if (pid1 < 0)
+	status = 0;
+	pipex->pid1 = fork();
+	if (pipex->pid1 < 0)
 		error_exit("fork");
-	else if (pid1 == 0)
+	else if (pipex->pid1 == 0)
 		child_one(pipex);
 	else
 	{
-		pid2 = fork();
-		if (pid2 < 0)
+		pipex->pid2 = fork();
+		if (pipex->pid2 < 0)
 			error_exit("fork");
-		else if (pid2 == 0)
+		else if (pipex->pid2 == 0)
 			child_two(pipex);
 		close(pipex->fd[0]);
 		close(pipex->fd[1]);
 		close(pipex->file1);
 		close(pipex->file2);
-		wait(NULL);
-		wait(NULL);
+		waitpid(pipex->pid1, NULL, 0);
+		waitpid(pipex->pid2, &status, 0);
 	}
+	return (WEXITSTATUS(status));
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -59,6 +60,5 @@ int	main(int argc, char **argv, char **envp)
 	pipex.envp = envp;
 	if (pipe(pipex.fd) < 0)
 		error_exit("pipe");
-	run_pipex(&pipex);
-	return (0);
+	return (run_pipex(&pipex));
 }

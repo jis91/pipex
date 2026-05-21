@@ -27,9 +27,11 @@ typedef struct s_pipex
 	int		fd[2];
 	char	**argv;
 	char	**envp;
+	pid_t	pid1;
+	pid_t	pid2;
 }	t_pipex;
 
-void	run_pipex(t_pipex *pipex);
+int		run_pipex(t_pipex *pipex);
 void	child_one(t_pipex *pipex);
 void	child_two(t_pipex *pipex);
 void	execute(char *cmd, char **envp);
