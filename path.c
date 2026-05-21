@@ -23,6 +23,12 @@ static char	*try_path(char *dir, char *cmd)
 	return (path);
 }
 
+static void		handle_permission(char **directories)
+{
+	free_split(directories);
+	write(2, "Permission denied\n", 20)
+	exit(126);
+}
 char	*get_path_from_envp(char **envp)
 {
 	int	i;
@@ -58,6 +64,11 @@ char	*resolve_path(char *cmd, char **envp)
 		{
 			free_split(directories);
 			return (path);
+		}
+		if (access(path, F_OK) == 0)
+		{
+			free(path);
+			handle_permission(directories);
 		}
 		free(path);
 		i++;

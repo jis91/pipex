@@ -33,8 +33,8 @@ void	run_pipex(t_pipex *pipex)
 		close(pipex->fd[1]);
 		close(pipex->file1);
 		close(pipex->file2);
-		waitpid(pid1, NULL, 0);
-		waitpid(pid2, NULL, 0);
+		wait(NULL);
+		wait(NULL);
 	}
 }
 
