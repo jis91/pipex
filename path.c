@@ -27,7 +27,7 @@ static char	*try_path(char *dir, char *cmd)
 static void		handle_permission(char **directories)
 {
 	free_split(directories);
-	write(2, "Permission denied\n", 20);
+	write(2, "Permission denied\n", 19);
 	exit(126);
 }
 
@@ -38,7 +38,7 @@ static char	*check_access(char *path, char **directories)
 		free_split(directories);
 		return (path);
 	}
-	if (access(path, F_OX) == 0)
+	if (access(path, F_OK) == 0)
 	{
 		free(path);
 		handle_permission(directories);
@@ -77,8 +77,9 @@ char	*resolve_path(char *cmd, char **envp)
 	directories = ft_split(raw_path, ':');
 	while (directories[i])
 	{
-		path = try_path(directories[i], cmd);
-		check_access(path, directories[i]);
+		path = check_access(path, directories);
+		if (path)
+			return(path);
 		i++;
 	}
 	free_split(directories);
