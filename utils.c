@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                         ::::::::           */
+/*   utils.c                                             :+:    :+:           */
+/*                                                      +:+                   */
+/*   By: jstrasse <marvin@42.fr>                       +#+                    */
+/*                                                    +#+                     */
+/*   Created: 2026/05/21 14:16:00 by jstrasse       #+#    #+#                */
+/*   Updated: 2026/05/21 14:17:12 by jstrasse       ########   odam.nl        */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
 void	free_split(char **tab)
@@ -13,9 +25,8 @@ void	free_split(char **tab)
 	free(tab);
 }
 
-void    error_exit(char *msg)
+void	error_exit(char *msg)
 {
-    perror(msg);
-    exit(1);
+	perror(msg);
+	exit(1);
 }
-
